@@ -4,10 +4,10 @@ const FILES = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./icons/kol-halashon.png",
-  "./icons/irgun-shiurei-torah.png",
-  "./icons/all-daf.png",
-  "./icons/torah-anytime.png"
+  "./Icons/kol-halashon.png",
+  "./Icons/irgun-shiurei-torah.png",
+  "./Icons/all-daf.png",
+  "./Icons/torah-anytime.png"
 ];
 
 self.addEventListener("install", event => {
