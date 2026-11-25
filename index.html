@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Torah">
-<meta name="theme-color" content="#f5f4ef">
+<meta name="theme-color" content="#263D32">
+
 <link rel="manifest" href="./manifest.json">
+
 <title>Torah</title>
 
 <style>
@@ -21,21 +24,30 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #f5f4ef;
+  background: #F5F4EF;
 }
 
 body {
-  padding: 20px;
-  padding-top: max(20px, env(safe-area-inset-top));
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+}
+
+/* HOME SCREEN */
+
+#home {
+  height: 100%;
+  width: 100%;
+  padding: 18px;
+  padding-top: max(18px, env(safe-area-inset-top));
+  padding-bottom: max(18px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
 }
 
 h1 {
   text-align: center;
-  font-size: clamp(28px, 4vw, 44px);
-  color: #263b32;
+  color: #263D32;
+  font-size: clamp(30px, 4vw, 48px);
   margin: 5px 0 18px;
 }
 
@@ -49,41 +61,98 @@ h1 {
 }
 
 .tile {
+  border: 2px solid rgba(0,0,0,.06);
+  border-radius: 26px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   text-decoration: none;
-  border-radius: 25px;
-  color: #183b5b;
-  background: #dceafa;
-  border: 2px solid rgba(0,0,0,.06);
-  box-shadow: 0 4px 12px rgba(0,0,0,.08);
-  text-align: center;
   padding: 12px;
-  gap: 15px;
+  gap: 12px;
+  background: #DCEBFA;
+  color: #183B5B;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
   -webkit-tap-highlight-color: transparent;
+}
+
+.tile.app {
+  background: #E3EFDF;
+  color: #285532;
 }
 
 .tile:active {
   transform: scale(.97);
 }
 
-.tile.app {
-  background: #e3efdf;
-  color: #285532;
-}
-
 .logo {
-  width: clamp(100px, 15vw, 180px);
-  height: clamp(100px, 15vw, 180px);
+  width: clamp(100px, 17vw, 190px);
+  height: clamp(100px, 17vw, 190px);
   object-fit: contain;
-  display: block;
 }
 
 .name {
-  font-size: clamp(20px, 3vw, 34px);
   font-weight: bold;
+  font-size: clamp(18px, 2.6vw, 32px);
+  text-align: center;
+}
+
+/* WEBSITE VIEWER */
+
+#viewer {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background: white;
+}
+
+.toolbar {
+  flex-shrink: 0;
+  height: 66px;
+  padding: 5px 12px;
+  padding-top: max(5px, env(safe-area-inset-top));
+  background: #263D32;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.toolbar button {
+  border: none;
+  border-radius: 12px;
+  background: #FFFFFF;
+  color: #263D32;
+  min-width: 58px;
+  height: 46px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toolbar button.home {
+  background: #D9EBD8;
+  min-width: 100px;
+}
+
+#siteTitle {
+  color: white;
+  font-size: clamp(15px, 2vw, 22px);
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#siteFrame {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: none;
+  background: white;
 }
 
 </style>
@@ -91,38 +160,146 @@ h1 {
 
 <body>
 
-<h1>תורה</h1>
+<!-- FOUR BUTTON HOME SCREEN -->
 
-<div class="grid">
+<div id="home">
 
-<a class="tile" href="shortcuts://run-shortcut?name=Launch%20Kol%20Halashon">
-  <img class="logo" src="./Icons/kol-halashon.png" alt="Kol Halashon">
-  <div class="name">Kol Halashon</div>
-</a>
+  <h1>תורה</h1>
 
-<a class="tile" href="shortcuts://run-shortcut?name=Launch%20Irgun%20Shiurei%20Torah">
-  <img class="logo" src="./Icons/irgun-shiurei-torah.png" alt="Irgun Shiurei Torah">
-  <div class="name">Irgun Shiurei Torah</div>
-</a>
+  <div class="grid">
 
-<a class="tile app" href="shortcuts://run-shortcut?name=Launch%20All%20Daf">
-  <img class="logo" src="./Icons/all-daf.png" alt="All Daf">
-  <div class="name">All Daf</div>
-</a>
+    <button class="tile"
+      onclick="openWebsite(
+        'https://www.kolhalashon.com/en/regularSite/home',
+        'Kol Halashon'
+      )">
+      <img class="logo"
+        src="./Icons/kol-halashon.png"
+        alt="Kol Halashon">
+      <span class="name">Kol Halashon</span>
+    </button>
 
-<a class="tile app" href="shortcuts://run-shortcut?name=Launch%20Torah%20Anytime">
-  <img class="logo" src="./Icons/torah-anytime.png" alt="Torah Anytime">
-  <div class="name">Torah Anytime</div>
-</a>
+    <button class="tile"
+      onclick="openWebsite(
+        'https://irgunshiuraitorah.com/',
+        'Irgun Shiurei Torah'
+      )">
+      <img class="logo"
+        src="./Icons/irgun-shiurei-torah.png"
+        alt="Irgun Shiurei Torah">
+      <span class="name">Irgun Shiurei Torah</span>
+    </button>
+
+    <a class="tile app"
+      href="shortcuts://run-shortcut?name=Launch%20All%20Daf">
+      <img class="logo"
+        src="./Icons/all-daf.png"
+        alt="All Daf">
+      <span class="name">All Daf</span>
+    </a>
+
+    <a class="tile app"
+      href="shortcuts://run-shortcut?name=Launch%20Torah%20Anytime">
+      <img class="logo"
+        src="./Icons/torah-anytime.png"
+        alt="Torah Anytime">
+      <span class="name">Torah Anytime</span>
+    </a>
+
+  </div>
+</div>
+
+
+<!-- INTERNAL WEBSITE VIEWER -->
+
+<div id="viewer">
+
+  <div class="toolbar">
+
+    <button class="home" onclick="goHome()">
+      🏠 HOME
+    </button>
+
+    <span id="siteTitle">TORAH</span>
+
+    <button onclick="goBack()" aria-label="Back">
+      ←
+    </button>
+
+    <button onclick="goForward()" aria-label="Forward">
+      →
+    </button>
+
+  </div>
+
+  <iframe
+    id="siteFrame"
+    src="about:blank"
+    allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+    allowfullscreen
+    webkitallowfullscreen>
+  </iframe>
 
 </div>
 
+
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js');
+
+const home = document.getElementById("home");
+const viewer = document.getElementById("viewer");
+const frame = document.getElementById("siteFrame");
+const siteTitle = document.getElementById("siteTitle");
+
+let currentSite = "";
+
+function openWebsite(url, name) {
+
+  currentSite = url;
+
+  siteTitle.textContent = name;
+
+  home.style.display = "none";
+  viewer.style.display = "flex";
+
+  frame.src = url;
+
+}
+
+function goHome() {
+
+  viewer.style.display = "none";
+  home.style.display = "flex";
+
+}
+
+function goBack() {
+
+  try {
+    frame.contentWindow.history.back();
+  } catch (e) {
+    console.log("Use the website's own back control.");
+  }
+
+}
+
+function goForward() {
+
+  try {
+    frame.contentWindow.history.forward();
+  } catch (e) {
+    console.log("Use the website's own forward control.");
+  }
+
+}
+
+// Register offline support
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
   });
 }
+
 </script>
 
 </body>
