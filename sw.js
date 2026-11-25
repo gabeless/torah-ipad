@@ -1,9 +1,13 @@
-onst CACHE_NAME = "torah-launcher-v1";
+const CACHE_NAME = "torah-launcher-v2";
 
 const FILES = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./icons/kol-halashon.png",
+  "./icons/irgun-shiurei-torah.png",
+  "./icons/all-daf.png",
+  "./icons/torah-anytime.png"
 ];
 
 self.addEventListener("install", event => {
@@ -16,19 +20,26 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+      )
+    )
+  );
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   const url = new URL(event.request.url);
-
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request);
-    })
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request)
+    )
   );
 });
