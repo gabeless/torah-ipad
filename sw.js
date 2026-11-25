@@ -1,4 +1,4 @@
-const CACHE_NAME = "torah-launcher-v2";
+const CACHE_NAME = "torah-launcher-v3";
 
 const FILES = [
   "./",
